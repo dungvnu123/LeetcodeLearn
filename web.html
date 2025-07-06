@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trái Tim Chuyên Nghiệp</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #2b2b2b, #1a1a1a);
+            overflow: hidden;
+        }
+
+        .heart-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .heart {
+            position: absolute;
+            width: 100px;
+            height: 90px;
+            background: linear-gradient(135deg, #ff6b6b, #ff2d2d);
+            top: 50px;
+            left: 50px;
+            transform: rotate(-45deg);
+            animation: beat 1.4s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 45, 45, 0.6);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 90px;
+            background: inherit;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .heart::before {
+            left: 50px;
+            transform: rotate(-90deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(90deg);
+            transform-origin: 100% 100%;
+        }
+
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% {
+                transform: rotate(-45deg) scale(1);
+            }
+            50% {
+                transform: rotate(-45deg) scale(1.15);
+            }
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-container">
+        <div class="heart">
+            <div class="glow"></div>
+        </div>
+    </div>
+
+    <script>
+        function createParticle() {
+            const particle = document.createElement("div");
+            particle.classList.add("particle");
+            const container = document.querySelector(".heart-container");
+            container.appendChild(particle);
+
+            const size = Math.random() * 6 + 4;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 180 + 10}px`;
+            particle.style.top = `${Math.random() * 180 + 10}px`;
+            particle.style.animationDelay = `${Math.random() * 1.5}s`;
+            particle.style.background = `hsl(${Math.random() * 20 + 340}, 80%, 80%)`;
+
+            setTimeout(() => particle.remove(), 2000);
+        }
+
+        setInterval(createParticle, 200);
+    </script>
+</body>
+</html>
